@@ -29,6 +29,6 @@ int main()
 	cout << answer.size() << endl;
 	for(auto iter = answer.begin(); iter != answer.end(); iter ++)
 	{
-		cout << *iter << endl;
+		cout << *iter << "\n";
 	}
 }
