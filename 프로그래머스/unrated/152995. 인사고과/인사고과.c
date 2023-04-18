@@ -34,7 +34,6 @@ int solution(int** scores, size_t scores_rows, size_t scores_cols) {
     }
     if(flag == 0)
         return -1;
-
     for(int i = 0; i < scores_rows; i ++)
     {
         if(scores[0][0] + scores[0][1] < scores[i][0]+scores[i][1])
