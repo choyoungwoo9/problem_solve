@@ -21,7 +21,7 @@ int find(int num)
 
 void union_vertex(int num1, int num2)
 {
-	parent[find(num1)] =  find(num2);
+	parent[find(num1)] = find(num2);
 }
 
 bool is_same_group(int num1, int num2)
