@@ -13,9 +13,11 @@ int find(int x)
 		return x;
 	else
 	{
-		return find(parent[x]);
+		parent[x] = find(parent[x]);
+		return parent[x];
 	}
 }
+
 
 void uni(int x, int y)
 {
