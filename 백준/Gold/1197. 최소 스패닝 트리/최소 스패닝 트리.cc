@@ -1,64 +1,61 @@
-
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
+int V, E;
+
+vector<pair<int, pair<int, int> > >vt;
+
 int parent[10001];
+int answer = 0;
 
-int find(int x)
+int find(int num)
 {
-	if(parent[x] == x)
-		return x;
-	else
+	if(parent[num] == num)
+		return num;
+	parent[num] = find(parent[num]);
+	return parent[num];
+}
+
+void union_vertex(int num1, int num2)
+{
+	parent[find(num1)] =  find(num2);
+}
+
+bool is_same_group(int num1, int num2)
+{
+	if(find(num1) == find(num2))
 	{
-		parent[x] = find(parent[x]);
-		return parent[x];
-	}
-}
-
-
-void uni(int x, int y)
-{
-	x = find(x);
-	y = find(y);
-	parent[y] = x;
-}
-
-bool sameparent(int x, int y)
-{
-	x = find(x);
-	y = find(y);
-	if(x == y)
 		return true;
+	}
 	return false;
 }
 
 int main()
 {
-	int vertex, e;
-	cin >> vertex >> e;
-	int result = 0;
-	vector<pair<int, pair<int, int> > >v;
-	for(int i = 0; i < e; i ++)
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> V >> E;
+	int num1, num2, cost;
+	for(int i = 0; i < E; i++)
 	{
-		int from, to, cost;
-		cin >> from >> to >> cost;
-		v.push_back(pair<int, pair<int, int> >(cost, pair<int, int>(from, to)));
+		cin >> num1 >> num2 >> cost;
+		vt.push_back(pair<int, pair<int, int> >(cost, pair<int, int>(num1, num2)));
 	}
-	sort(v.begin(), v.end());
-	for(int i = 1; i <= vertex; i ++)
-	{
+
+	sort(vt.begin(), vt.end());
+	for(int i = 1; i <= V; i ++)
 		parent[i] = i;
-	}
-	for(int i = 0; i < v.size(); i ++)
+	for(int i = 0; i < E; i ++)
 	{
-		if(!sameparent(v[i].second.first, v[i].second.second))
+		if(!is_same_group(vt[i].second.first, vt[i].second.second))
 		{
-			uni(v[i].second.first, v[i].second.second);
-			result += v[i].first;
+			union_vertex(vt[i].second.first, vt[i].second.second);
+			answer += vt[i].first;
 		}
 	}
-	cout << result << endl;
+	cout << answer << endl;
 }
