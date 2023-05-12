@@ -24,11 +24,11 @@ int main()
 
 	long long low = 1;
 	long long high = m_max;
-	long long answer = 0;
+	int answer = 0;
 	while(low <= high)
 	{
-		long long mid = ((long long)low + (long long)high) / (long long)2;
-		long long count = 0;
+		long long mid = (low + high) / (long long)2;
+		int count = 0;
 		for(int i = 0; i < K; i ++)
 		{
 			count += (ar[i] / mid);
