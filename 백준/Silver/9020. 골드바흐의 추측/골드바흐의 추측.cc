@@ -50,6 +50,8 @@ tmp ar[10001];
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
 	cin >> n;
 	for(int i = 2; i <= 10000; i ++)
 	{
