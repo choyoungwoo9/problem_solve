@@ -28,7 +28,8 @@ void dijkstra()
 		{
 			for(int i = 0; i < index_node[index].size(); i ++)
 			{
-				que.push(pair<int, int>(-1 * (tmp_dist + index_node[index][i].first), index_node[index][i].second));
+				if(dist[index_node[index][i].second] > (tmp_dist + index_node[index][i].first))
+					que.push(pair<int, int>(-1 * (tmp_dist + index_node[index][i].first), index_node[index][i].second));
 			}
 		}
 		if(tmp_dist < dist[index])
@@ -38,7 +39,7 @@ void dijkstra()
 
 int main()
 {
-	ios::sync_with_stdio(NULL);
+	ios::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
 	cin >> V >> E;
 	for(int i = 1; i <= V; i ++)
