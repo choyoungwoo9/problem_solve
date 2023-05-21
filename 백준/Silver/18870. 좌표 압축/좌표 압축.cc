@@ -5,11 +5,9 @@
 using namespace std;
 
 int N;
-int ar[1000000];
-set<int> st;
-map<int, int> mp;
+pair<int, int> ar[1000000];
 
-
+int answer[1000000];
 int main()
 {
 	ios::sync_with_stdio(false);
@@ -17,18 +15,21 @@ int main()
 	cin >> N;
 	for(int i = 0; i < N; i ++)
 	{
-		cin >> ar[i];
-		st.insert(ar[i]);
+		cin >> ar[i].first;
+		ar[i].second = i;
 	}
-	int i = 0;
-	for(auto it = st.begin(); it != st.end(); it++)
-	{
-		mp.insert({*it, i});
-		i ++;
-	}
+	sort(ar, ar+N);
+	int index = 0;
 	for(int i = 0; i < N; i ++)
 	{
-		cout << mp[ar[i]] << " ";
+		if(i != 0 && ar[i].first != ar[i-1].first)
+			index ++;
+		answer[ar[i].second] = index;
+	}
+
+	for(int i = 0; i < N; i ++)
+	{
+		cout << answer[i] << " ";
 	}
 	cout << endl;
 }
