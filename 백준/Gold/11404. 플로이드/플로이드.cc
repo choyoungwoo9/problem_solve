@@ -6,32 +6,22 @@ using namespace std;
 int INF = 2100000000;
 int n, m;
 
-vector<pair<int, int> > vertex[101];
-int dist[101];
+int map[101][101];
 
-void djikstra(int start)
+void floyd_warshall()
 {
-	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > >pq;
-	dist[start] = 0;
-	for(int i = 0; i < vertex[start].size(); i ++)
-		pq.push(pair<int, int>(vertex[start][i].first, vertex[start][i].second));
-	while(!pq.empty())
+	for(int k = 1; k <= n; k ++)
 	{
-		int index = pq.top().second;
-		int cost = pq.top().first;
-		pq.pop();
-		if(dist[index] < cost)
-			continue;
-		if(dist[index] == INF)
+		for(int i = 1; i <= n; i++)
 		{
-			for(int i = 0; i < vertex[index].size(); i ++)
+			for(int j = 1; j <= n; j++)
 			{
-				if(cost + vertex[index][i].first > dist[vertex[index][i].second])
+				if(map[i][k] == INF || map[k][j] == INF)
 					continue;
-				pq.push(pair<int, int>(cost + vertex[index][i].first, vertex[index][i].second));
+				if(map[i][j] > map[i][k] + map[k][j])
+					map[i][j] = map[i][k] + map[k][j];
 			}
 		}
-		dist[index] = cost;
 	}
 }
 
@@ -41,24 +31,34 @@ int main()
 	cin.tie(NULL); cout.tie(NULL);
 
 	cin>> n >> m;
+	for(int i = 1; i <= n; i ++)
+	{
+		for(int j = 1; j <= n; j++)
+		{
+			if(i == j)
+				continue;
+			map[i][j] = INF;
+		}
+	}
 	for(int i = 0; i < m; i ++)
 	{
 		int v1, v2, c;
 		cin >> v1 >> v2 >> c;
-		vertex[v1].push_back(pair<int, int>(c, v2));
+		if(map[v1][v2] > c)
+			map[v1][v2] = c;
 	}
 
+	floyd_warshall();
 	for(int i = 1; i <= n; i ++)
 	{
-		for(int j = 1; j<= n; j++)
-			dist[j] = INF;
-		djikstra(i);
-		for(int j = 1; j<= n; j++)
+		for(int j = 1; j <= n; j++)
 		{
-			if(dist[j] == INF)
+			if(map[i][j] == INF)
+			{
 				cout << "0 ";
-			else
-				cout << dist[j] << " ";
+				continue;
+			}
+			cout << map[i][j] << " ";
 		}
 		cout << "\n";
 	}
