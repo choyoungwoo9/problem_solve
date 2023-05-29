@@ -4,26 +4,27 @@ using namespace std;
 
 int A, B, C;
 
-int recursive_find(int count)
+int solve(int num)
 {
-	if(count == 1)
+	if(num == 1)
 		return A % C;
-	unsigned long long find = recursive_find(count / 2);
-	if(count % 2 == 0)
+	unsigned long long ret;
+	if(num % 2 == 0)
 	{
-		return (find * find) % C;
+		ret = solve(num / 2);
+		ret = ret * ret % C;
 	}
 	else
 	{
-		find = (find * find) % C;
-		return (find * A) % C;
+		ret = solve(num / 2);
+		ret = ret * ret % C;
+		ret = ret * A % C;
 	}
+	return ret;
 }
 
 int main()
 {
 	cin >> A >> B >> C;
-
-	cout << recursive_find(B) << endl;
-	
+	cout << solve(B) << endl;
 }
