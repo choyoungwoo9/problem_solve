@@ -1,50 +1,57 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
+
+char mp[101][102];
 
 int N, M;
 
-char map[100][101];
-int visited[100][100];
+class info
+{
+	public:
+		info(int y, int x, int cost)
+		{
+			this->y = y;
+			this->x = x;
+			this->cost = cost;
+		}
+		int y;
+		int x;
+		int cost;
+};
 
-int dx[4] = {-1, 0, 0, 1};
-int dy[4] = {0, 1, -1, 0};
+int dy[4] = {0, 0, 1, -1};
+int dx[4] = {1, -1, 0, 0};
 
-queue <pair <int, pair<int, int> > > que;
+queue<info> que;
+
+int answer;
 
 void bfs()
 {
-	visited[0][0] = 1;
-	for(int i = 0; i < 4; i ++)
-	{
-		if(0+dx[i] < 0 || 0+dx[i] >= N ||0+dy[i] < 0 || 0+dy[i] >= M)
-			continue;
-		if(map[0+dx[i]][0+dy[i]] == '1')
-		{
-			que.push(make_pair(2, make_pair(0+dx[i], 0+dy[i])));
-		}
-	}
+	que.push(info(1, 1, 1));
+	mp[1][1] = '0';
 	while(1)
 	{
-		int day = que.front().first;
-		int cur_i = que.front().second.first;
-		int cur_j = que.front().second.second;
-		que.pop();
-		if(visited[cur_i][cur_j])
-			continue;
-		visited[cur_i][cur_j] = 1;
-		if(cur_i == N-1 && cur_j == M-1)
+		int y = que.front().y;
+		int x = que.front().x;
+		int cost = que.front().cost;
+		if(y == N && x == M)
 		{
-			cout << day << endl;
-			return ;
+			answer = cost;
+			break;
 		}
+		que.pop();
 		for(int i = 0; i < 4; i ++)
 		{
-			if(cur_i+dx[i] < 0 || cur_i+dx[i] >= N ||cur_j+dy[i] < 0 || cur_j+dy[i] >= M)
+			if(y+dy[i] <= 0 || y+dy[i] > N)
 				continue;
-			if(map[cur_i+dx[i]][cur_j+dy[i]] == '1' && !visited[cur_i+dx[i]][cur_j+dy[i]])
-				que.push(make_pair(day + 1, make_pair(cur_i+dx[i], cur_j+dy[i])));
+			if(x+dx[i] <= 0 || x+dx[i] > M)
+				continue;
+			if(mp[y+dy[i]][x+dx[i]] == '0')
+				continue;
+			mp[y+dy[i]][x+dx[i]] = '0';
+			que.push(info(y+dy[i], x+dx[i], cost+1));
 		}
 	}
 }
@@ -52,7 +59,10 @@ void bfs()
 int main()
 {
 	cin >> N >> M;
-	for(int i = 0; i < N; i ++)
-		cin >> map[i];
+	for(int j = 1; j <= N; j++)
+	{
+		cin >> (mp[j] + 1);
+	}
 	bfs();
+	cout << answer << endl;
 }
