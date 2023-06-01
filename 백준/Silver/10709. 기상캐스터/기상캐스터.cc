@@ -6,6 +6,8 @@ int H, W;
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
 	cin >> H >> W;
 	for(int j = 0; j < H; j ++)
 	{
