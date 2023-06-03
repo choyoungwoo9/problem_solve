@@ -26,6 +26,8 @@ int dfs(int idx)
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
 	cin >> N >> M;
 	for(int i = 0; i < M; i ++)
 	{
@@ -45,15 +47,21 @@ int main()
 		if(hacked[i] > mx)
 			mx = hacked[i];
 	}
-	vector<int> vt;
 	for(int i = 1; i <= N; i ++)
 	{
 		if(hacked[i] == mx)
-			vt.push_back(i);
+			cout << i << " ";
 	}
-	sort(vt.begin(), vt.end());	
-
-	for(int num : vt)
-		cout << num << " ";
 	cout << endl;
+	// vector<int> vt;
+	// for(int i = 1; i <= N; i ++)
+	// {
+	// 	if(hacked[i] == mx)
+	// 		vt.push_back(i);
+	// }
+	// sort(vt.begin(), vt.end());	
+
+	// for(int num : vt)
+	// 	cout << num << " ";
+	// cout << endl;
 }
