@@ -22,7 +22,7 @@ int main()
 	{
 		string str;
 		cin >> str;
-		if(mp[str] == 1)
+		if(mp.find(str) != mp.end())
 			answer ++;
 	}
 	cout << answer << endl;
