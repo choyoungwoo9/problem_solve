@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
-map<string, int> mp;
+unordered_map<string, int> mp;
 
 int main()
 {
