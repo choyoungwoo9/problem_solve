@@ -50,6 +50,8 @@ void bfs()
 int main()
 {
 	cin >> N >> K;
+	ios::sync_with_stdio(false);
+	cout.tie(NULL);
 	bfs();
 	cout << answer << endl;
 	for(int i = answer; i >= 0; i --)
