@@ -1,48 +1,42 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
+int visited[160000];
 int N, K;
+int answer;
+int cnt;
 
-queue<pair<int, int> > que;
-
-typedef struct tmp
-{
-	int count;
-	int time;
-}tmp;
-
-tmp ar[100001];
-
-int flag = -1;
+int flag = 0;
+int before_time = -1;
 
 void bfs()
 {
-	que.push(pair<int, int>(N, 0));
-	while(1)
+	queue<pair<int, int> >que;
+	que.push({N, 1});
+	while(!que.empty())
 	{
-		if(que.empty())
-			break ;
-		int index = que.front().first;
-		int time = que.front().second;
+		int cur_idx = que.front().first;
+		int cur_time = que.front().second;
 		que.pop();
-		if(index < 0 || index > 100000)
-			continue;
-		if(!ar[index].count)
+		if(before_time != cur_time && flag)
+			return ;
+		if(cur_idx == K)
 		{
-			ar[index].time = time;
-			ar[index].count ++;
+			flag = 1;
+			answer = cur_time;
+			cnt ++;
 		}
-		else if(ar[index].time == time)
-		{
-			ar[index].count ++;
-		}
-		else
+		before_time = cur_time;
+		if(visited[cur_idx] > cur_time)
 			continue;
-		que.push(pair<int, int>(index+1, time+1));
-		que.push(pair<int, int>(index-1, time+1));
-		que.push(pair<int, int>(index*2, time+1));
+		visited[cur_idx] = cur_time;
+		if(cur_idx - 1 >= 0 && cur_idx - 1 < 160000 && !visited[cur_idx - 1])
+			que.push({cur_idx -1, cur_time + 1});
+		if(cur_idx + 1 >= 0 && cur_idx + 1 < 160000 && !visited[cur_idx + 1])
+			que.push({cur_idx + 1, cur_time + 1});
+		if(cur_idx * 2 >= 0 && cur_idx * 2 < 160000 && !visited[cur_idx * 2])
+			que.push({cur_idx * 2, cur_time + 1});
 	}
 }
 
@@ -50,6 +44,7 @@ int main()
 {
 	cin >> N >> K;
 	bfs();
-	cout << ar[K].time << endl;
-	cout << ar[K].count << endl;
+	answer --;
+	cout << answer << endl;
+	cout << cnt << endl;
 }
