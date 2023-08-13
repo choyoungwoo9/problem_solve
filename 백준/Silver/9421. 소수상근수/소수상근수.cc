@@ -4,14 +4,15 @@
 using namespace std;
 
 bool table[1000001];
+int n;
 
 void eratosthenes()
 {
-	for(int i = 2; i <= 1000000; i++)
+	for(int i = 2; i <= n; i++)
 	{
 		if(table[i])
 			continue;
-		for(int j = 2; j * i <= 1000000; j++)
+		for(int j = 2; j * i <= n; j++)
 			table[j*i] = 1;
 	}
 }
@@ -32,7 +33,7 @@ int table2[1000001];
 
 void getsangun()
 {
-	for(int i = 0; i <= 1000000; i ++)
+	for(int i = 0; i <= n; i ++)
 	{
 		if(table2[i] != 0)
 			continue;
@@ -70,10 +71,9 @@ int main()
 	ios::sync_with_stdio(false);
 	cout.tie(NULL);
 	cin.tie(NULL);
+	cin >> n;
 	eratosthenes();
 	getsangun();
-	int n;
-	cin >> n;
 	for(int i = 2; i <= n; i++)
 		if(!table[i] && table2[i] == 1)
 			cout << i << endl;
