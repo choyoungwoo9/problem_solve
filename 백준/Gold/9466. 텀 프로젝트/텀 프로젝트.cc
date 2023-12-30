@@ -7,7 +7,7 @@ int visited[100000];
 vector<int> vt[100000];
 int n;
 
-int recursiveTrip(int startIdx, int curIdx, int cnt)
+int trip(int startIdx, int curIdx, int cnt)
 {
 	if(startIdx == curIdx)
 		return cnt;
@@ -16,19 +16,8 @@ int recursiveTrip(int startIdx, int curIdx, int cnt)
 	visited[curIdx] = 1;
 	int ret = 0;
 	for(int i = 0; i < vt[curIdx].size(); i ++)
-		ret += recursiveTrip(startIdx, vt[curIdx][i], cnt+1);
+		ret += trip(startIdx, vt[curIdx][i], cnt+1);
 	return ret;
-}
-
-int startTrip(int startIdx)
-{
-	if(visited[startIdx])
-		return 0;
-	visited[startIdx] = 1;
-	int cnt = 0;
-	for(int i = 0; i < vt[startIdx].size(); i ++)
-		cnt += recursiveTrip(startIdx, vt[startIdx][i], 1);
-	return cnt;
 }
 
 void init()
@@ -55,8 +44,13 @@ void solution()
 	}
 	int haveTeamMemberCnt = 0;
 	for(int i = 0; i < n; i++)
-		haveTeamMemberCnt += startTrip(i);
-	// cout << haveTeamMemberCnt << endl;
+	{
+		if(visited[i])
+			continue;
+		visited[i] = 1;
+		for(int j = 0; j < vt[i].size(); j ++)
+			haveTeamMemberCnt += trip(i,vt[i][j], 1);
+	}
 	cout << n - haveTeamMemberCnt << "\n";
 }
 
